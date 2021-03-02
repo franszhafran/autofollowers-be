@@ -12,7 +12,7 @@ class AccountController extends Controller
     public function __construct(
         private JWTAuthenticationService $authenticationService,
     ) {}
-    
+
     public function login(LoginRequest $request) {
         try {
             $user = User::firstOrCreate([
@@ -20,9 +20,9 @@ class AccountController extends Controller
                 "password" => $request->password,
             ]);
 
-            $this->authenticationService->createToken($user->id);
+            $token = $this->authenticationService->createToken($user->id);
 
-            return $this->sendOk();
+            return $this->sendOk($token);
         } catch (\Exception $e) {
             return $this->handleException($e);
         }    

@@ -4,20 +4,29 @@ namespace App\Traits;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 
 trait ApiResponse
 {
-    public function sendOk($status = 'OK', $code = 200): JsonResponse
+    public function sendOk($token = null, $status = 'OK', $code = 200): JsonResponse
     {
+        if(!$token) {
+            Cookie::queue("token", $token, 1440);
+        }
+
         return response()->json([
             'code' => $code,
             'status' => $status
         ], $code);
     }
 
-    public function sendData($data, $status = 'OK', $code = 200): JsonResponse
+    public function sendData($token = null, $data, $status = 'OK', $code = 200): JsonResponse
     {
+        if(!$token) {
+            Cookie::queue("token", $token, 1440);
+        }
+
         return response()->json([
             'code' => $code,
             'status' => $status,
@@ -25,8 +34,12 @@ trait ApiResponse
         ], $code);
     }
 
-    public function sendError($message, $status = 'Error', $code = 400): JsonResponse
+    public function sendError($token = null, $message, $status = 'Error', $code = 400): JsonResponse
     {
+        if(!$token) {
+            Cookie::queue("token", $token, 1440);
+        }
+
         return response()->json([
             'code' => $code,
             'status' => $status,
@@ -36,7 +49,6 @@ trait ApiResponse
 
     public function handleException(Exception $e): JsonResponse
     {
-
         Log::error($e);
 
         if (env('APP_DEBUG')) {
