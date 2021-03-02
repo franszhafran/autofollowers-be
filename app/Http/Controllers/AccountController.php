@@ -25,6 +25,6 @@ class AccountController extends Controller
             return $this->sendOk($token);
         } catch (\Exception $e) {
             return $this->handleException($e);
-        }    
+        }
     }
 }   

@@ -15,7 +15,6 @@ class JWTAuthenticationService {
             
             return $data->sub;
         } catch (\Exception $e) {
-            echo $e->getMessage();
             $this->throwFailedError();
         }
     }
