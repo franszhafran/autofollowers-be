@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PackageHistory extends Model
+class PackageQueue extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,7 @@ class PackageHistory extends Model
     protected $fillable = [
         'user_id',
         'package_id',
+        'data',
     ];
 
     /**

@@ -25,4 +25,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\PackageHistory');
     }
+
+    public function PackageQueue()
+    {
+        return $this->hasMany('App\Models\PackageQueue');
+    }
 }
