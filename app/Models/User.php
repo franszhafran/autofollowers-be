@@ -20,4 +20,9 @@ class User extends Authenticatable
         'username',
         'password',
     ];
+
+    public function PackageHistory()
+    {
+        return $this->hasMany('App\Models\PackageHistory');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\JWTAuthenticationService;
 use Illuminate\Http\Request;
+use App\Models;
 
 class PackageController extends Controller
 {
@@ -16,8 +17,19 @@ class PackageController extends Controller
             $request->validate([
                 "package_id" => "string",
             ]);
-    
-            return $this->sendOk();
+            
+            try {
+                $history = new Models\PackageHistory;
+                $history->user_id = $request->user->id;
+                $history->package_id = $request->package_id;
+                $history->save();
+
+                return $this->sendOk();
+            }
+
+            catch(\Exception $e) {
+                return $this->handleException($e);
+            } 
         } catch (\Exception $e) {
             return $this->handleException($e);
         }
